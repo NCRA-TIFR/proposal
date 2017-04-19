@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{float}
+\restylefloat{table}
+\usepackage[margin={2cm,2cm}]{geometry}
+\usepackage{multicol}
+
+\begin{document}
+\begin{multicols*}
+\begin{tabular}{l | l}
+\hline
+\caption{Data Products}
+Data Product & Description \\ \hline
+Level 0 & Reconstructed, unprocessed PRISM digitized numbers (DN) at full resolution with GPS \\ \hline                                                   
+Level 1 & Calibrated spectral radiance with geolocation information including illumination and observation geometry \\ \hline
+Level 2 & Benthic reflectance generated following atmosphere and water column, radiative transfer inversion with geolocation, support processing, information and flags
+Level 3 & Benthic cover, i.e., seafloor classified into coverage of benthic types (coral, algae, sand) with geolocation, uncertainties, and flags \\ \hline
+Level 4 & Benthic primary productivity and calcification \\ \hline                                                                                                                                                       
+Ancillary in situ & Optical, benthic cover, and benthic community productivity and calcification calibration validation \\ \hline                                                          
+\end{tabular}
+\end{table}
+\end{multicols*}
+\end{document}

@@ -1,0 +1,38 @@
+\documentclass[a3paper]{article}
+\usepackage{tikz}
+\usetikzlibrary{timeline}
+\begin{document}
+\scalebox{0.5}{
+\begin{tikzpicture}
+\timeline{4}
+\begin{phases}
+    \initialphase{involvement degree=3cm,phase color=blue}
+    \phase{between week=1 and 2 in 0.1,
+      involvement degree=7cm,phase color=green!50!black}
+    \phase{between week=2 and 3 in 0.2,
+      involvement degree=6cm,phase color=red!40!black}
+    \phase{between week=3 and 4 in 0.5,
+      involvement degree=8cm,phase color=red!90!black}
+    %\phase{between week=4 and 5 in 0.3,
+     % involvement degree=2.5cm,phase color=red!40!yellow}
+\end{phases}
+
+\node [xshift=-0.6cm,yshift=1cm,anchor=east, font=\Large\bfseries] at (phase-0.180) {Work Plan};
+
+\node [xshift=-0.6cm,yshift=0cm,anchor=east, font=\Large\bfseries] at (phase-0.180) {Phase I};
+
+%Upper labels
+\addmilestone{at=phase-0.120,direction=120:1cm, text={Concept}, text options={above}} \addmilestone{at=phase-0.90,direction=90:1.2cm, text={Outline}} \addmilestone{at=phase-1.120,direction=110:1.5cm, text={Hands-On Orientation to SDS}} 
+\addmilestone{at=phase-1.70,direction=70:2.5cm, text={Prototype of Parser}}
+\addmilestone{at=phase-2.100,direction=100:1cm, text={Creation of data model}} 
+\addmilestone{at=phase-3.99,direction=90:2.0cm, text={Consolidation of pipeline}}
+
+%Lower labels
+\addmilestone{at=phase-0.270,direction=270:1cm, text={Concept Review}, text options={below}} 
+\addmilestone{at=phase-1.270,direction=270:1cm, text={Configuration File Study}} 
+\addmilestone{at=phase-2.270,direction=270:0.7cm, text={Interfacing between parser and data store}} 
+\addmilestone{at=phase-3.300,direction=270:1.5cm, text={A/B Tests}} 
+
+\end{tikzpicture}
+}
+\end{document}

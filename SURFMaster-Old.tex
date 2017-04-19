@@ -1,0 +1,189 @@
+\documentclass{article}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{timeline}
+\usepackage{booktabs}
+\usepackage{float}
+\restylefloat{table}
+\graphicspath{ {../} }
+\usepackage[margin={1.5cm,2cm}]{geometry}
+\usepackage{multicol}
+\setlength\columnsep{1.5cm}
+\usepackage{tabto}
+\usepackage{pdflscape}
+\usepackage{graphicx}
+\usepackage{array}
+
+\begin{document}
+\begin{titlepage}
+	\centering
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{logo_nasa_trio_black@2x.png}
+	\end{figure}
+	\vspace{2cm}
+	{\scshape\LARGE JPL/Caltech SURF Proposal \par}
+	\vspace{2cm}
+	{\huge\bfseries Measuring Coral Reefs with Airborne Imaging Spectroscopy\par}
+	\vspace{2cm}
+	{\Large\itshape Shubhankar Deshpande\par}
+	\vfill
+	Mentor\par
+	Dr.David R. \textsc{Thompson}
+
+	\vfill
+
+\end{titlepage}
+\begin{multicols*}{2}
+\section{Overview}
+\subsection{About CORAL}
+	According to a recent investigation, an estimated 33-50 \% of the world's coral reefs have undergone degradation, believed to be as a result of climate change \cite{Reef_Studies}. However, the data supporting the investigation are scattered, and the exact relation it has to the environmental condition cannot be easily established. In order to better predict the future of the global reef ecosystem, the CORAL campaign will explore the relation between the environmental condition and influential biogeophysical parameters. The objectives of the CORAL campaign as stated \cite{bio_parameters} are:
+
+$\bullet$ To measure the condition of representative coral reefs across the global range of reef biogeophysical values. The primary indicators for coral reef condition are benthic cover (ratio of coral, algae, and sand), primary productivity, and calcification.
+
+$\bullet$ To establish empirical models that relate reef condition to biogeophysical forcing parameters. Ten primary biogeophysical parameters have been selected for their recognized influence on components of the reef system. \cite{bio_parameters} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{CORAL_Campaign_Locations.png}
+\caption{CORAL Survey Area \cite{bio_parameters}}
+\end{figure}
+The CORAL project consists of a hierarchical multilayer data processing system, the Software Data System (SDS), that processes data products at various levels in accordance with EOSDIS \cite{EOSIS}
+
+\begin{table}[H]
+	\caption{Data Products}
+	\begin{tabular}{| >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{2in} |}
+		\hline
+		Data Product & Description \\
+		\hline 
+		Level 0 & Reconstructed, unprocessed PRISM digitized numbers (DN) at full resolution with GPS \\
+		\hline 
+		Level 1 & Calibrated spectral radiance with geolocation information including illumination and observation geometry \\
+		\hline 
+		Level 2 & Benthic reflectance generated following atmosphere and water column radiative transfer inversion with geolocation, support processing information and flags \\
+		\hline 
+		Level 3 & Benthic cover, i.e., seafloor classified into coverage of benthic types (coral, algae, sand) with geolocation, uncertainties, and flags \\
+		\hline 
+		Level 4 & Benthic primary productivity and calcification \\
+		\hline 
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{coral_data_system.png}
+\caption{CORAL Data System}
+\end{figure}
+
+More information regarding the CORAL project and the PRISM imaging spectrometer may be found on the project website. \footnote{http://coral.jpl.nasa.gov.}
+
+\subsection{Data Consolidation \& Archival Tracking (Phase I)}
+Sensitivity measurements are bound to evolving configuration formats, due to upgradation in hardware capabilities as the lifecycle of the project progresses. This creates a hindrance in the time to generate data driven scientific results, as a significant amount of time must be invested by the researcher to process these files of varying configuration formats. A next-generation system must be created that can efficiently process data across various configuration formats as needed, depending on the specific case. This data can then be consolidated to create a dataset constituting a higher degree of coherency. Further, the system should be able to track the current state of the archive, across all components of the pipeline.
+\subsection{Deep Neural Networks for Atmospheric Correction in Imaging Spectroscopy (Phase II)}
+
+An open problem in imaging spectroscopy is generating an accurate model of the atmosphere. However, physical properties of the atmosphere such as pressure, temperature, and optical effects due to scattering, absorption, and dispersion, cannot be directly modeled. Hence, the problem of creating an accurate atmospheric model becomes an inverse problem, where a proxy quantity such as the radiance spectrum is measured, to derive properties of the atmosphere such as pressure, temperature, aerosol content, etc.
+
+Optimal Estimation (OE) is an applied statistics method used commonly in the geosciences typically for the problem of atmospheric sounding. The state of the art for a range of current atmospheric remote sensing problem, is the iterative OE approach introduced by Rogers et al. \cite{rogers} However, a major hurdle to applying OE for imaging spectrometer data is computational speed. An alternative solution is to emulate this process using neural networks \cite{DRT-NN}, which would potentially offer multiple advantages such as lower time complexity, reduced space complexity, as well as the ability to detect complex non linear relationships between the state vector (temperature, ozone density, humidity, etc.) and the measurement vector (radiance spectrum).
+
+Hence, phase I ties in to phase II as it generates a sufficiently large training set, that will be used in training the deep neural network to accurately model the atmosphere.
+\section{Objectives}
+\subsection{Phase I}
+The specifications of the current versions of the L1B products and L2B products may be found at \cite{L1B_data_product} and \cite{L2_data_product}. In the first phase of the project, we aim to create a next-generation science data workflow by streamlining the existing pipeline.
+Specifically this would be done by creating a system, that will parse varying configuration formats as needed and consolidate key data features. Once these features have been extracted, they will be used in further data analysis. We anticipate multiple hurdles in this process due to the difficulty in creating a robust parser, insensitive to variations in different configuration formats. 
+The workflow would then further be automated to track the current state of the archive, characterized by features such as:
+\begin{enumerate}
+\itemsep0em 
+\item Which files have been analyzed
+\item Level to which every file been processed in the pipeline
+\item Where are the files stored in the system
+\item Metadata contained in each of the headers.
+\end{enumerate}
+
+The baseline level of efficiency for this system could be characterized through degree of data insight, complexity of system, and ease of integration with current SDS.
+
+
+\subsection{Phase II}
+
+\section{Approach}
+Having worked as an Engineering Intern, at the National Center for Radio Astrophysics - Tata Institute of Fundamental Research (NCRA-TIFR) has made me better prepared for this SURF project. Here, I am currently part of a team developing an automated data analysis pipeline using SPAM \cite{spam-intema} for the calibration, flagging, and image synthesis of radio astronomical data generated by the Giant Meterwave Radio Telescope (GMRT). The images thus generated are integrated into NAPS (NCRA Proposal and Archival System), and then shared with the larger scientific community similar to the Sloan Digital Sky Survey (SDSS).
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{gadpu.png}
+\caption{GMRT Data Processing Utility}
+\end{figure}
+This is akin to Phase I of the project where we will be focusing on processing and state tracking in the context of generating training data.
+
+At NCRA-TIFR we will further be exploring machine learning techniques for the automatic classification of point sources and extended radio galaxies, of which certain techniques are relevant to the second phase of the project.
+
+In the past, as an intern at IIT Delhi, I have worked as part of a team creating virtual reality models through GPGPU's, knowledge of which possibly may be beneficial during the training phase of the deep neural network.
+\subsection{Phase I}
+A multi-step procedure of satisfying the objectives of phase I would occur in the following manner:
+\begin{enumerate}
+\itemsep0em
+\item Detailed study of the existing file configuration formats to ensure complete extraction of key data features.
+\item Design of the archival state tracking mechanism to cover all characteristics as mentioned.
+\item Prototype implementation of the parser + state tracking mechanism across a small section of the pipeline.
+\item Transfer of data into a standard predefined data model. We are planning to store the data in a SQL family database (although we are exploring the possibility of using a NoSQL family data store, due to the non homogeneous nature of the data).
+\item Running an A/B test to ensure that the system will integrate well into the current SDS, and to mitigate any possible challenges.
+\end{enumerate}
+\subsection{Phase II}
+Of primary importance within the second phase, is to define a network architecture suitable to the problem at hand. In a high percentage of learning scenarios, the architecture of the network is directly dependent on the nature of the data (particularly relevant to the output layer). Hence, a prerequisite to successfully defining a network architecture, would be to gain domain level insight in the nature of the data, which would be obtained after completion of the first phase of work.
+An approach to emulate the output of MODTRAN 6.0 using neural networks was done by \cite{DRT-NN}.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{nn_arch.png}
+\caption{Neural Network Architecture for MODTRAN emulation as designed in \cite{DRT-NN}}
+\end{figure}
+Once an initial architecture has been designed, we will proceed with implementation using the TensorFlow framework \cite{TensorFlow}. We plan to apply standard dimensionality reduction techniques before feeding data as input to the network, primarily to reduce redundancy across features. Prior to this, certain parts of the data may have to be cleaned. After the cleaning and reduction phases, we will train the model using this data, and compare the output using standard benchmarks (in this case accuracy in comparison with MODTRAN 6.0). Based on the results we get, we will tune the network architecture to better fit the data, and monitor the results.
+In the final phase of the SURF project, I will collect the results, and structure the documentation maintained over the course of the project for possible journal publication.
+
+\section*{Acknowledgements}
+I thank Dr.David R. Thompson \footnote{NASA Jet Propulsion Laboratory, California Institute of Technology} for offering me 
+I would further like to thank Dr.Yogesh Wadadekar \footnote{\label{NCRA-TIFR} National Center for Radio Astrophysics - Tata Institute of Fundamental Research}, Dr.C. H. Ishwara Chandra \footnotemark[\ref{NCRA-TIFR}], and Dr.Abhay Shukla \footnote{Pierre and Marie Curie University - Paris 6} for taking the 
+
+\begin{thebibliography}{10}
+\bibitem{Reef_Studies}(International Society for Reef Studies Consensus Statement, October 2015)
+
+\bibitem{bio_parameters} 
+\emph{Biogeophysical Components of Influence on Reefs},
+\texttt{https://coral.jpl.nasa.gov/about-coral}
+
+\bibitem{EOSIS}
+\emph{Data Processing Levels for EOSDIS Data Products},
+\texttt{https://science.nasa.gov/earth-science\\/earth-science-data/data-processing-levels-\\for-eosdis-data-products}
+
+\bibitem{DRT-NN}
+Thompson, D. R., Bue, B. D., Green, R. O., \& Natraj, V. (2010), 
+\emph{On Optimal Estimatin Theory for Atmospheric Correction in VSWIR Imaging Spectroscopy}
+
+\bibitem{L1B_data_product}
+\emph{CORAL L1 Distribution Document v03},
+\texttt{https://coral.jpl.nasa.gov/alt\_locator\\/CORAL\_L1B\_Data\_Product\_Readme\_v04.txt}
+
+\bibitem{L2_data_product}
+\emph{CORAL L2 Distribution Document v02},
+Available at 
+\texttt{https://coral.jpl.nasa.gov/alt\_locator\\/CORAL\_L2\_Data\_Product\_Readme\_v02.txt}
+
+\bibitem{MODTRAN-emulator}
+Rivera JP, Verrelst J, Gómez-Dans J, Muñoz-Marí J, Moreno J, Camps-Valls G
+\emph{An Emulator Toolbox to Approximate Radiative Transfer Models with Statistical Learning. Remote Sensing. 2015; 7(7):9347-9370.}
+
+\bibitem{spam-intema}
+\emph{SPAM: Source Peeling and Atmospheric Modeling}
+Intema, Huib
+\texttt{https://safe.nrao.edu/wiki/\\bin/view/Main/HuibIntemaSpam}
+
+\bibitem{TensorFlow}
+Abadi, Martın, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado et al.
+\emph{"Tensorflow: Large-scale machine learning on heterogeneous distributed systems." arXiv preprint arXiv:1603.04467 (2016)}
+
+\bibitem{rogers}
+Rodgers, C.D.(2000).
+\emph{Inverse methods for atmospheric sounding: theory and practice} (Vol. 2). World scientific.
+
+\end{thebibliography}
+\end{multicols*}
+\end{document}

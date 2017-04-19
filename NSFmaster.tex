@@ -1,0 +1,128 @@
+\documentclass{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{plain}                                                      %%
+%%%%%%%%%% EXACT 1in MARGINS %%%%%%%                                   %%
+\setlength{\textwidth}{6.5in}     %%                                   %%
+\setlength{\oddsidemargin}{0in}   %% (It is recommended that you       %%
+\setlength{\evensidemargin}{0in}  %%  not change these parameters,     %%
+\setlength{\textheight}{8.5in}    %%  at the risk of having your       %%
+\setlength{\topmargin}{0in}       %%  proposal dismissed on the basis  %%
+\setlength{\headheight}{0in}      %%  of incorrect formatting!!!)      %%
+\setlength{\headsep}{0in}         %%                                   %%
+\setlength{\footskip}{.5in}       %%                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                   %%
+\newcommand{\required}[1]{\section*{\hfil #1\hfil}}                    %%
+\renewcommand{\refname}{\hfil References Cited\hfil}                   %%
+\bibliographystyle{plain}                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%PUT YOUR MACROS HERE
+
+%\include{NSFsumm}
+% \setcounter{page}{1}
+%\include{NSFdesc}
+% \setcounter{page}{1}
+% \include{NSFrefs}
+% \setcounter{page}{1}
+% \include{NSFbio}
+% \setcounter{page}{1}
+%\include{NSFdata}
+% \setcounter{page}{1}
+%\include{NSFcollab}
+% \setcounter{page}{1}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[landscape]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{timeline}
+\usepackage{booktabs}
+\usepackage[table,xcdraw]{xcolor}
+^{•}
+
+\pagestyle{empty}
+\begin{document}
+
+%%%%%%%%% SUMMARY -- 1 page, third person
+% e.g:  "The PI will prove" not "I will prove"
+
+\required{Project Summary}
+\section{Overview}
+The CORAL project consists of a hierarchical multilayer data processing system, that contains the following Levels (with reference to EOSIS [https://science.nasa.gov/earth-science/earth-science-data/data-processing-levels-for-eosdis-data-products])
+[Insert table here containing Table 1. https://coral.jpl.nasa.gov/data-products]
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\rowcolor[HTML]{656565} 
+{\color[HTML]{FFFFFF} Data Product}                         & {\color[HTML]{FFFFFF} Description}                                                                                                                                                                      \\ \midrule
+Level 0                                                     & \begin{tabular}[c]{@{}l@{}}Reconstructed, unprocessed PRISM digitized numbers (DN)\\ at full resolution with GPS\end{tabular}                                                                           \\
+Level 1                                                     & \begin{tabular}[c]{@{}l@{}}Calibrated spectral radiance with geolocation information including\\ illumination and observation geometry\end{tabular}                                                     \\
+Level 2                                                     & \begin{tabular}[c]{@{}l@{}}Benthic reflectance generated following atmosphere and water column\\ radiative transfer inversion with geolocation, support processing\\ information and flags\end{tabular} \\ \midrule
+Level 3                                                     & \begin{tabular}[c]{@{}l@{}}Benthic cover, i.e., seafloor classified into coverage of benthic types\\ (coral, algae, sand) with geolocation, uncertainties, and flags\end{tabular}                       \\
+Level 4                                                     & Benthic primary productivity and calcification                                                                                                                                                          \\
+\begin{tabular}[c]{@{}l@{}}Ancillary in\\ situ\end{tabular} & \begin{tabular}[c]{@{}l@{}}Optical, benthic cover, and benthic community productivity\\ and calcification calibration/validation\end{tabular}                                                          
+\end{tabular}
+\end{table}
+
+
+Level 0 processing operates on the raw data generated from the spectroscopic instrument. As is commonplace with legacy hardware, sensitivity measurements are recorded in a range of different file formats that contains instrument specific details. A significant amount of time must be invested by the researcher to process these configuration files in order to generate data that can then be used in the context of the research. A system must be created that can efficiently extract data across various configuration formats, and consolidate the information to create datasets containing a higher degree of coherency. 
+
+%\required{Intellectual Merit}
+% This should describe the potential of the proposed activity
+% to advance knowledge in the field of mathematics. 
+
+\required{Broader Impacts}
+% This should describe the potential of the proposed activity
+% to benefit society and contribute to the achievement of 
+% specific, desired societal outcomes.
+% Examples of Broader Imacts include, but are not limited to:
+% 1. Full participation of women, persons with disabilities, and 
+% underrepresented minorities in science, technology, engineering, 
+% and mathematics (STEM); 
+% 2. Improved STEM education and educator 
+% development at any level; 
+% 3. Increased public scientific literacy 
+% and public engagement with science and technology; 
+% 4. Improved well-being of individuals in society; 
+% 5. Development of a diverse, globally competitive STEM workforce;
+% 6. Increased partnerships between academia, industry, and others; 
+% 7. Improved national security; 
+% 8. Increased economic competitiveness of the US; 
+% 9. Enhanced infrastructure for research and education.
+
+\begin{tikzpicture}
+
+\timeline{4}
+\begin{phases}
+    \initialphase{involvement degree=3cm,phase color=blue}
+    \phase{between week=1 and 2 in 0.1,
+      involvement degree=7cm,phase color=green!50!black}
+    \phase{between week=2 and 3 in 0.2,
+      involvement degree=6cm,phase color=red!40!black}
+    \phase{between week=3 and 4 in 0.5,
+      involvement degree=8cm,phase color=red!90!black}
+    %\phase{between week=4 and 5 in 0.3,
+     % involvement degree=2.5cm,phase color=red!40!yellow}
+\end{phases}
+
+\node [xshift=-0.6cm,yshift=1cm,anchor=east, font=\Large\bfseries] at (phase-0.180) {Work Plan};
+
+%Upper labels
+\addmilestone{at=phase-0.120,direction=120:1cm, text={Concept}, text options={above}} \addmilestone{at=phase-0.90,direction=90:1.2cm, text={Outline}} \addmilestone{at=phase-1.120,direction=110:1.5cm, text={Hands-On Orientation to SDS}} 
+\addmilestone{at=phase-1.70,direction=70:2.5cm, text={Prototype of Parser}}
+\addmilestone{at=phase-2.100,direction=100:1cm, text={Creation of data model}} 
+\addmilestone{at=phase-3.99,direction=90:2.0cm, text={Consolidation of pipeline}}
+
+%Lower labels
+\addmilestone{at=phase-0.270,direction=270:1cm, text={Concept Review}, text options={below}} 
+\addmilestone{at=phase-1.270,direction=270:1cm, text={Configuration File Study}} 
+\addmilestone{at=phase-2.270,direction=270:0.7cm, text={Interfacing between parser and data store}} 
+\addmilestone{at=phase-3.300,direction=270:1.5cm, text={A/B Tests}} 
+
+\end{tikzpicture}
+\end{document}
