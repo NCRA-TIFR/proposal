@@ -108,6 +108,7 @@
 	\vspace{2cm}
 	{\scshape\LARGE NCRA-TIFR Project Proposal \par}
 	\vspace{2cm}
+	{\scshape\LARGE Supervised Learning \& Analytical Modeling for Automated Morphological Classification of Radio Sources \par}
 	{\huge\bfseries \par}
 	\center\includegraphics[scale=0.5]{NCRATIFR.jpg}
 	
@@ -120,7 +121,7 @@
 	Mentor\par
 	Dr. Yogesh  \textsc{Wadadekar}
 	\par
-	Dr. C. H. Ishwar \textsc{Chandra}
+	Dr. C. H. Ishwara \textsc{Chandra}
 
 	\vfill
 
@@ -172,74 +173,71 @@ https://github.com/NCRA-TIFR/radiogen.
 
 \subsection{Data Preprocessing}
 
-Real world data are incomplete, inconsistent and noisy. Techniques like Data cleaning, integration, transformation, reduction, discretization are required to structure the data uniformly throughout the dataset in the required format.
+Real world data is incomplete, inconsistent and noisy. Techniques like data cleaning, integration, transformation, reduction, discretization are required to ensure data uniformity.
 
-Some regular techniques are:
-\begin{itemize}
-\item Mean subtraction 
+Standard techniques include:
+\begin{enumerate}
+\item Mean Subtraction 
 
-It involves subtracting the mean across every individual feature in the data, and has the geometric interpretation of centering the cloud of data around the origin along every dimension.
+The mean is subtracted across every feature in the data cloud. The geometric interpretation of this operation is the centering of the data cloud around the origin along every dimension.
 
 \item Normalization
 
-Normalization refers to normalizing the data dimensions so that they are of approximately the same scale. There are two common ways of achieving this normalization. One is to divide each dimension by its standard deviation, once it has been zero-centered. Another form of this preprocessing normalizes each dimension so that the min and max along the dimension is -1 and 1 respectively. 
-
-\end{itemize}
+The data dimensions to span the same range. This results in higher accuracy during data processing, as inter-dimensional variance is accounted for. There are two common ways of achieving this normalization. 
+\begin{enumerate}
+\item Divide each dimension by its standard deviation, once it has been zero-centered.
+\item Normalize each dimension to result in a range of values [-1,1].
+\end{enumerate}
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.26]{prepro1.jpeg}
 \caption{Mean Subtraction and Normalization}
 \end{figure}
-\begin{itemize}
-\item Dimensionality reduction using Principal Component Analysis
 
-The main linear technique for dimensionality reduction, principal component analysis, performs a linear mapping of the data to a lower-dimensional space in such a way that the variance of the data in the low-dimensional representation is maximized. By finding the eigen vector with the highest eigen value we select the Principal component axis with the highest variance and the minimum reconstruction error. Thus we reduce the dimensions by eliminating Principal component axes with the eigen vectors with the least variance thereby not losing much information.
-\end{itemize}
+\item Dimensionality Reduction using Principal Component Analysis
+
+The main linear technique for dimensionality reduction, principal component analysis, performs a linear mapping of the data to a lower-dimensional space in such a way that the variance of the data in the low-dimensional representation is maximized. By finding the eigen vector with the highest eigen value we select the Principal component axis with the highest variance and the minimum reconstruction error. Dimension reduction occurs by eliminating axes with eigen vectors exhibiting the least variance.
+This results in a data representation exhibiting a higher degree of variance, leading to faster convergence and greater accuracy during classification.
+
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75]{pca.png}
 \caption{Reduction from 2D to 1D using PCA}
 \end{figure}
+\end{enumerate}
 \subsection{Analytical Approach}
+The analytical approach to solving the problem of galaxy morphology classification would primarily contain two steps:
+\begin{enumerate}
+\item Feature extraction using sophisticated techniques prevalent in image processing.
+\item Building a statistical model of the extracted features
+\item Cross comparison of the designed model with principal indicators of dominant classes
+\end{enumerate}
+A variety of techniques have been used to tackle the related problem of visual recognition in Computer Vision. The standard algorithm for feature extraction is the Scale Invariant Feature Transform (SIFT).
 
-Some approaches that we plan to use: 
-\begin{itemize}
-\item Scale Invariant Feature Transform (SIFT
-
-Statistical modelling of data to manually extract features. For any object in an image, interesting points on the object can be extracted to provide a "feature description" of the object. This description, extracted from a training image, can then be used to identify the object when attempting to locate the object in a test image containing many other objects. To perform reliable recognition, it is important that the features extracted from the training image be detectable even under changes in image scale, noise and illumination. SIFT is invariant of scaling, transformation and rotation.
-
-\item Edge Detection
-
-1) Reduction of noise using a Gaussian filter
-2) Finding gradients along the X and Y directions in the image
-3) Suppression of local minima
-4) Double Thresholing to determine probable edges
-5) Suppression of all weak edges which lack connection
+\subsubsection{Scale Invariant Feature Transform} 
+The SIFT algorithm extracts keypoints from a set of reference images and stores them in a database. The feature vectors of the extracted images are compared wih the reference vectors on the basis of a defined norm (usually Euclidean distance). The probability that of the subset of features indicating the presence of an object is computed. This gives the accuracy of the fit. When multiple features pass these tests, the class can be correctly identified with a high confidence.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{edge.jpeg}
-\caption{Edge detection}
-\end{figure}
-
-\item Image Segmentation
-
-Image Segmentation is the process of partitioning a digital image into multiple segments. The goal of segmentation is to simplify and change the representation of an image into something that is more meaningful and easier to analyze. It is typically used to locate objects and boundaries (lines, curves, etc.) in images. More precisely, image segmentation is the process of assigning a label to every pixel in an image such that pixels with the same label share certain characteristics.
-\end{itemize}
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.1]{segmentation.jpg}
-\caption{Segmentation of data into distinct characteristics}
+\includegraphics[scale=0.75]{sift.jpg}
+\caption{Feature Extraction using SIFT}
 \end{figure}
 
 \subsection{Empirical Approach}
 
-Empirical approach is a way of gaining knowledge by means of direct and indirect observation or experience. In the context of this project, we plan to employ Artificial Neural Networks(ANNs), which are a computational model based on large collection of simple artifical neurons, that learns hierarchical representations of the observational data. Each neural unit is connected with many other units which computes using summation function. Neural networks typically consist of multiple layers in which a signal traverses from the first(input)  to the last (output) layer of neural units.
+An empirical approach is a way of gaining knowledge by means of direct and indirect observation or experience. In the context of this project, we plan to employ Artificial Neural Networks(ANNs), which are a computational model based on a large collection of artifical neurons, that learn hierarchical representations of the data. Each neural unit is connected with many other units which computes to essentially create a non-linear stacked function approximator. Neural networks typically consist of multiple layers in which a signal traverses from the input layer to the output layer.
 
-Convolutional neural networks(CNNs), a particular type of ANN, currently provide the best solutions to many problems in computer vision such as  image segmentation, recognition and classification\cite{alex}.
+A convolutional neural network (CNN), is a type of ANN, is a state of the art model that currently provide the best solutions to many problems in computer vision such as  image segmentation, recognition and classification\cite{alex}.
 
-Convolutional neural networks were designed to use minimal amounts of preprocessing. A typical architecture of a CNN consists of convolutional layers, activation layers and pooling layers. Convolutional layer performs the convolution operation on previous layers, activation layer defines the output of that node given an input or set of inputs, and the pooling layer serves to progressively reduce the spatial size of the representation, to reduce the number of parameters and amount of computation in the network.
-    
-The initial layers of the CNNs learn simple features in the input data such as straight edges, simple colors, and curves. The deeper layers learn the higher level representation of image and search for complex shapes and structures. Mathematically deeper layers can be thought of as compositions of previous layers. \cite{alex}\cite{Zeiler}\cite{karparthy}. 
+Convolutional neural networks were designed to use minimal amounts of preprocessing. A typical architecture of a CNN consists of convolutional layers, activation layers and pooling layers each of which is briefly explained.
+\begin{itemize}
+\item Convolution layer:
+Performs the convolution operation with a static filter on input from previous layers.
+\item Activation layer: 
+Defines the output of a unit given an input or set of inputs by applying an activation function. 
+\item Pooling layer: 
+Progressively reduces the spatial size of the representation, which results in a decreased number of parameters and thus reduction in network computation.
+\end{itemize}    
+The initial layers of the CNNs learn simple features in the input data such as straight edges, simple colors, and curves. The deeper layers learn the higher level representation of image and search for complex shapes and structures. Mathematically, deeper layers can be thought of as compositions of previous layers. \cite{alex}\cite{Zeiler}\cite{karparthy}. 
 
 \begin{figure}[H]
 \centering
@@ -247,16 +245,17 @@ The initial layers of the CNNs learn simple features in the input data such as s
 \caption{CNN learning simple features on initial layers for different classes}
 \end{figure}
 
-Variants of CNNs have achieved great successes for morphological galaxy classification and prediction on SDSS\cite{Sander}. Sander Dieleman et al. won the Galaxy challenge, an international competition to build the best model for morphology
+Variants of CNNs have achieved great successes for morphological galaxy classification and prediction on SDSS\cite{Sander}. Sander Dieleman et al. won the Galaxy challenge, an international competition on Kaggle, to build the best model for morphology
 classication based on annotated images from the Galaxy Zoo project.
 
 \section{Timeline}
 
 \begin{vtimeline}[timeline color=cyan!80!blue, line offset=2pt]
-26th April to 11th May & literature survey\endlr
-Mid-August to October & Basic prototype model \endlr
-October to November & choosing the approaches which work, and implementing them on all data validation of the results\endlr
-November to December & Refining the system, cleaning and commenting the code\endlr
+April - May & Literature survey\endlr
+Mid-August to September & Hypothesis testing \endlr
+September to October & Prototype implementation\endlr
+October to November & System refinement\endlr
+November to December & Publishing results\endlr
 \end{vtimeline}
 
 \section{Conclusion}
