@@ -42,42 +42,52 @@
 
 \end{titlepage}
 \begin{multicols*}{2}
-\section{Morphological Classes of Radio Galaxies}
-\newline Radio galaxies with active nuclei can be distinguished based on their radio luminosity or brightness of their radio emissions in relation to their hosting environment. Some of the basic morphological classifications include point sources, extended sources i.e. sources with extended contours, double radio sources, jets, and lobes.
+\section{Introduction}
+\subsection{Morphological Classes of Radio Galaxies}
+
+Radio galaxies with active nuclei can be distinguished based on their radio luminosity or brightness of their radio emissions in relation to their hosting environment. Some of the basic morphological classifications include point sources, extended sources i.e. sources with extended contours, double radio sources, jets, and lobes.
 
 
-\section{Problems faced with current classification}
+\subsection{Problems faced with current classification}
 
+Currently Radio astronomers manually classify galaxies based on visual inspection of the images which is a slow procedure, and increases the time to production of scientific results. Further, it introduces uncertainities in the classification procedure, both of which are problems which can potentially be mitigated by using an automated approach.
 
-Currently Radio astronomers manually classify galaxies based on visual inspection of the images which, we are afraid, is slow, introduces uncertainities and something we believe is not a worthy activity for a radio astronomer to be engaged in. 
-
-Also, most algorithms have been used to classify just two object classes at a time. What we aim to achieve is build a robust model capable of handling more than 2 classes.
-
-
-
+Contemporary algorithms classify radio sources into at most three different classes. Our aim is to build a robust model capable of handling more than 2 classes.
 
 \section{Objective}
 
 \begin{itemize}
-	\item Exploring rare galaxies by classifying them into a special category other than the ones mentioned in section yy.
-	\item Effectively reduce the efforts put in by radio astronomers without affecting accuracy.
+	\item Potentially discovering rare forms of radio sources by classification in different classes.
+	\item Reduction in time to generate scientific results by radio astronomers.
+	\item Deeper insight into topological representation of radio data during classification.
 \end{itemize}
 
+\section{Approach}
 
+\subsection{Source Modelling}
+  The first step would be source extraction using the standard technique of gaussian modelling. We propose to do this using the robust PyBDSM pipeline used for fitting gaussian distributions to radio sources. The software contains a plethora of features, from which we would be using a small subset. This would mainly include:
 
+\begin{enumerate}
+\item Source extraction using gaussian modelling of radio data.
+\item Generation of a catalog file containing details of radio sources (RA, DEC, Size of Gaussian (min, max), etc.)
+\end{enumerate}
 
-\section{Approaches used for this problem}
-\newline As far as we know, no method has been employed for this task.
+\subsection{Cutout Generation}
+The second step would be to convert the RA(Right Ascension) and DEC (Declination) values generated from the catalog, to their corresponding pixel values in the original image. Based on these pixel values we generate 10*10 px cutouts using as reference the co-ordinates of the center of the radio source. This involves a multistep procedure briefly including:
+\begin{enumerate}
+\item Using the astropy module to read the FITS image in the form of a matrix
+\item Parsing through the generated catalog file using Pandas, and extracting data for each radio source such as RA, DEC, etc.
+\item Converting the RA, DEC values using in-built functions in astropy to convert from WCS to pixel values.
+\item Processing pixel values to account for difference in addressing between FORTRAN and C family of languages.
+\item Slicing the image matrix assuming the reference pixel co-ordinates as the center of the source.
+\item Storing the generated image cutout in a standard image format (JPEG), with name as (RA,DEC) values. 
+\end{enumerate}
 
+Prototype code for section \textit{3.1} and section \textit{3.2} has been written mainly for testing purposes. We used a sample image from the TGSS survey which was then processed using the first two steps of our pipeline to generate 470 cutout images.
 
- 
-\section{Our Proposed method}
-\subsection{Extracting sources from the FITS image using PyBDSM}
-  By Shubhankar
-\subsection{Cropping each individual source to work on it individually}
- On the basis of RA(Right Ascension) and Dec (Declination) values generated from section 5.1, we then convert it to its corresponding pixel values in the original fits image. Based on these pixel values we crop a 10*10 patches of image with the source coordinates at the centre.
+More details may be found at: https://github.com/NCRA-TIFR/radiogen
 
-\subsection{Preprocessing of the data}
+\subsection{Data Preprocessing}
 
 \begin{itemize}
 \item Image Processing techniques
@@ -115,5 +125,5 @@ We plan to deploy a Convolutional Neural Network model for classification which 
 \section{Data used}
     TIFR GMRT Sky Survey data shall be used along with the data processed from GMRT cycle 20. We plan to use the data from other cycles once it has been run through our SPAM pipeline. 
 
-
+\end{multicols*}
 \end{document}
