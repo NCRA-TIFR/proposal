@@ -7,7 +7,7 @@
 \usepackage{booktabs}
 \usepackage{float}
 \restylefloat{table}
-\graphicspath{ {../} }
+\graphicspath{{images/}}
 \usepackage[margin={1.5cm,2cm}]{geometry}
 \usepackage{multicol}
 \setlength\columnsep{1.5cm}
@@ -15,6 +15,93 @@
 \usepackage{pdflscape}
 \usepackage{graphicx}
 \usepackage{array}
+
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{charter}
+\usepackage{environ}
+\usepackage{tikz}
+\usetikzlibrary{calc,matrix}
+
+% code by Andrew:
+% http://tex.stackexchange.com/a/28452/13304
+\makeatletter
+\let\matamp=&
+\catcode`\&=13
+\makeatletter
+\def&{\iftikz@is@matrix
+  \pgfmatrixnextcell
+  \else
+  \matamp
+  \fi}
+\makeatother
+
+\newcounter{lines}
+\def\endlr{\stepcounter{lines}\\}
+
+\newcounter{vtml}
+\setcounter{vtml}{0}
+
+\newif\ifvtimelinetitle
+\newif\ifvtimebottomline
+\tikzset{description/.style={
+  column 2/.append style={#1}
+ },
+ timeline color/.store in=\vtmlcolor,
+ timeline color=red!80!black,
+ timeline color st/.style={fill=\vtmlcolor,draw=\vtmlcolor},
+ use timeline header/.is if=vtimelinetitle,
+ use timeline header=false,
+ add bottom line/.is if=vtimebottomline,
+ add bottom line=false,
+ timeline title/.store in=\vtimelinetitle,
+ timeline title={},
+ line offset/.store in=\lineoffset,
+ line offset=4pt,
+}
+
+\NewEnviron{vtimeline}[1][]{%
+\setcounter{lines}{1}%
+\stepcounter{vtml}%
+\begin{tikzpicture}[column 1/.style={anchor=east},
+ column 2/.style={anchor=west},
+ text depth=0pt,text height=1ex,
+ row sep=1ex,
+ column sep=1em,
+ #1
+]
+\matrix(vtimeline\thevtml)[matrix of nodes]{\BODY};
+\pgfmathtruncatemacro\endmtx{\thelines-1}
+\path[timeline color st] 
+($(vtimeline\thevtml-1-1.north east)!0.5!(vtimeline\thevtml-1-2.north west)$)--
+($(vtimeline\thevtml-\endmtx-1.south east)!0.5!(vtimeline\thevtml-\endmtx-2.south west)$);
+\foreach \x in {1,...,\endmtx}{
+ \node[circle,timeline color st, inner sep=0.15pt, draw=white, thick] 
+ (vtimeline\thevtml-c-\x) at 
+ ($(vtimeline\thevtml-\x-1.east)!0.5!(vtimeline\thevtml-\x-2.west)$){};
+ \draw[timeline color st](vtimeline\thevtml-c-\x.west)--++(-3pt,0);
+ }
+ \ifvtimelinetitle%
+  \draw[timeline color st]([yshift=\lineoffset]vtimeline\thevtml.north west)--
+  ([yshift=\lineoffset]vtimeline\thevtml.north east);
+  \node[anchor=west,yshift=16pt,font=\large]
+   at (vtimeline\thevtml-1-1.north west) 
+   {\textsc{Timeline \thevtml}: \textit{\vtimelinetitle}};
+ \else%
+  \relax%
+ \fi%
+ \ifvtimebottomline%
+   \draw[timeline color st]([yshift=-\lineoffset]vtimeline\thevtml.south west)--
+  ([yshift=-\lineoffset]vtimeline\thevtml.south east);
+ \else%
+   \relax%
+ \fi%
+\end{tikzpicture}
+}
+
+
+
 
 \begin{document}
 \begin{titlepage}
@@ -27,6 +114,8 @@
 	{\scshape\LARGE NCRA-TIFR Project Proposal \par}
 	\vspace{2cm}
 	{\huge\bfseries \par}
+	\center\includegraphics[scale=0.5]{NCRATIFR.jpg}
+	
 	\vspace{2cm}
 	{\Large\itshape Archit Sakhadeo\par}
 	{\Large\itshape Rathin Desai\par}
@@ -75,24 +164,38 @@ Contemporary algorithms classify radio sources into at most three different clas
 \subsection{Cutout Generation}
 The second step would be to convert the RA(Right Ascension) and DEC (Declination) values generated from the catalog, to their corresponding pixel values in the original image. Based on these pixel values we generate 10*10 px cutouts using as reference the co-ordinates of the center of the radio source. This involves a multistep procedure briefly including:
 \begin{enumerate}
-\item Using the astropy module to read the FITS image in the form of a matrix
-\item Parsing through the generated catalog file using Pandas, and extracting data for each radio source such as RA, DEC, etc.
-\item Converting the RA, DEC values using in-built functions in astropy to convert from WCS to pixel values.
+\item Reading the FITS image in the form of a matrix
+\item Parsing through the generated catalog file and extracting data for each radio source such as RA, DEC, etc.
+\item Converting the RA and DEC values from WCS (World Coordinate System) to pixel values.
 \item Processing pixel values to account for difference in addressing between FORTRAN and C family of languages.
 \item Slicing the image matrix assuming the reference pixel co-ordinates as the center of the source.
-\item Storing the generated image cutout in a standard image format (JPEG), with name as (RA,DEC) values. 
 \end{enumerate}
 
 Prototype code for section \textit{3.1} and section \textit{3.2} has been written mainly for testing purposes. We used a sample image from the TGSS survey which was then processed using the first two steps of our pipeline to generate 470 cutout images.
-More details may be found at: 
+More details can be found at: 
 https://github.com/NCRA-TIFR/radiogen.
 
 \subsection{Data Preprocessing}
+\subsubsection{Input data}
+We'll generate cutouts (as mentioned in section 3.2) from every image 
+in the TGSS survey. We'll have approximately 5500 * 470 i.e. 2585000 patches of image. 
+
+There are three common forms of data preprocessing image data:
 
 \begin{itemize}
-\item Image Processing techniques
+\item Mean subtraction : It involves subtracting the mean, of the all the pixels, across every feature in the data.
+
+\item Normalization : It involves normalizing the data dimensions so that they are of approximately the same scale. It effectively changes the range of pixel intensity values
 \end{itemize}
 
+\subsubsection{Dimensionality reduction}
+Dimensionality reduction is the process of reducing the number of random variables under consideration. It transforms the images in the high-dimensional space to a space of lesser dimensions.
+
+Some of the common forms of 
+
+\begin{itemize}
+	\item \textbf{Mean Subtraction}
+\end{itemize}
 \subsection{Analytical Approach}
 
 Two broad steps that we plan to use: 
@@ -104,26 +207,67 @@ Two broad steps that we plan to use:
 
 \subsection{Empirical Approach}
 
-We plan to deploy a Convolutional Neural Network model for classification which reduces the manual feature engineering part, and has achieved significant successes in object recognition and image classification tasks. ( Give References to papers) 
+Empirical approach is a way of gaining knowledge by means of direct and indirect observation or experience. In the context of this project, we plan to employ Artificial Neural Networks(ANNs), which are a computational model based on large collection of simple artifical neurons, that learns hierarchical representations of the observational data. Each neural unit is connected with many other units which computes using summation function. Neural networks typically consist of multiple layers in which a signal traverses from the first(input)  to the last (output) layer of neural units.
+
+Convolutional neural networks(CNNs), a particular type of ANN, currently provide the best solutions to many problems in computer vision such as  image segmentation, recognition and classification\cite{alex}.
+
+Convolutional neural networks were designed to use minimal amounts of preprocessing. A typical architecture of a CNN consists of convolutional layers, activation layers and pooling layers. Convolutional layer performs the convolution operation on previous layers, activation layer defines the output of that node given an input or set of inputs, and the pooling layer serves to progressively reduce the spatial size of the representation, to reduce the number of parameters and amount of computation in the network.
     
+The initial layers of the CNNs learn simple features in the input data such as straight edges, simple colors, and curves. The deeper layers learn the higher level representation of image and search for complex shapes and structures. Mathematically deeper layers can be thought of as compositions of previous layers. \cite{alex}\cite{Zeiler}\cite{karparthy}. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1.5]{cnn.png}
+\caption{CNN learning simple features on initial layers for different classes}
+\end{figure}
 
-\section{How we predict it will solve the problem}
+Variants of CNNs have achieved great successes for morphological galaxy classification and prediction on SDSS\cite{Sander}. Sander Dieleman et al. won the Galaxy challenge, an international competition to build the best model for morphology
+classication based on annotated images from the Galaxy Zoo project.
 
 \section{Timeline}
-\begin{itemize}
-	\item 26th April to 11th May - literature survey
-	\item Mid-August to October - working on basic prototype model individually by trying out multiple approaches
-	\item October to November - choosing the approaches which work, and implementing them on all data, validation of the results.
-	\item November to December - Refining the system, cleaning and commenting the code
-\end{itemize} 
 
 
 
+
+\begin{vtimeline}[timeline color=cyan!80!blue, line offset=2pt]
+26th April to 11th May & literature survey\endlr
+Mid-August to October & Basic prototype model \endlr
+October to November & choosing the approaches which work, and implementing them on all data validation of the results\endlr
+November to December & Refining the system, cleaning and commenting the code\endlr
+\end{vtimeline}
 
 
 \section{Conclusion}
 We would like to thank Dr.Yogesh Wadadekar \footnote{\label{NCRA-TIFR} National Center for Radio Astrophysics - Tata Institute of Fundamental Research}, Dr.C. H. Ishwara Chandra \footnotemark[\ref{NCRA-TIFR}] for their supportive presence during the process of brainstorming potential research ideas. Their constant guidance has been an invaluable source of inspiration for us, and we are eager to continue working with them.
+
+
+
+
+\begin{thebibliography}{9}
+\bibitem{alex} 
+Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton. 
+\textit{ImageNet Classification with Deep Convolutional
+Neural Networks}. 
+
+ 
+\bibitem{Zeiler} 
+Matthew D. Zeiler, Rob Fergus.  
+\textit{Visualizing and Understanding Convolutional Networks}.  
+\newline arXiv print : 1311.2901v3, 2013.
+
+\bibitem{karparthy} 
+Andrej Karparthy, Fei-Fei Li, Justin Johnson, Serena Yeung.
+\\\texttt{http://cs231n.github.io/convolutional-networks/}
+
+\bibitem{Sander} 
+Sander Dieleman, Kyle W. Willett and Joni Dambre  
+\textit{Rotation-invariant convolutional neural networks for galaxy morphology prediction}.  
+\newline arXiv print : 1503.0707v1, 2015.
+
+
+\end{thebibliography}
+
+
 
 \end{multicols*}
 \end{document}
