@@ -21,143 +21,99 @@
 	\centering
 	\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.5]{logo_nasa_trio_black@2x.png}
+	%\includegraphics[scale=0.5]{logo_nasa_trio_black@2x.png}
 	\end{figure}
 	\vspace{2cm}
-	{\scshape\LARGE JPL/Caltech SURF Proposal \par}
+	{\scshape\LARGE NCRA-TIFR Project Proposal \par}
 	\vspace{2cm}
-	{\huge\bfseries Measuring Coral Reefs with Airborne Imaging Spectroscopy\par}
+	{\huge\bfseries \par}
 	\vspace{2cm}
+	{\Large\itshape Archit Sakhadeo\par}
+	{\Large\itshape Rathin Desai\par}
+	{\Large\itshape Shadab Shaikh\par}
 	{\Large\itshape Shubhankar Deshpande\par}
 	\vfill
 	Mentor\par
-	Dr.David R. \textsc{Thompson}
+	Dr. Yogesh  \textsc{Wadadekar}
+	\par
+	Dr. C. H. Ishwar \textsc{Chandra}
 
 	\vfill
 
 \end{titlepage}
 \begin{multicols*}{2}
-\section{Overview}
-\subsection{About CORAL}
-	According to a recent investigation, an estimated 33-50 \% of the world's coral reefs have undergone degradation, believed to be as a result of climate change \cite{Reef_Studies}. However, the data supporting the investigation are scattered, and the exact relation it has to the environmental condition cannot be easily established. In order to better predict the future of the global reef ecosystem, the CORAL campaign will explore the relation between the environmental condition and influential biogeophysical parameters. The objectives of the CORAL campaign as stated \cite{bio_parameters} are:
+\section{Morphological Classes of Radio Galaxies}
+\newline Radio galaxies with active nuclei can be distinguished based on their radio luminosity or brightness of their radio emissions in relation to their hosting environment. Some of the basic morphological classifications include point sources, extended sources i.e. sources with extended contours, double radio sources, jets, and lobes.
 
-$\bullet$ To measure the condition of representative coral reefs across the global range of reef biogeophysical values. The primary indicators for coral reef condition are benthic cover (ratio of coral, algae, and sand), primary productivity, and calcification.
 
-$\bullet$ To establish empirical models that relate reef condition to biogeophysical forcing parameters. Ten primary biogeophysical parameters have been selected for their recognized influence on components of the reef system. \cite{bio_parameters} 
+\section{Problems faced with current classification}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{CORAL_Campaign_Locations.png}
-\caption{CORAL Survey Area \cite{bio_parameters}}
-\end{figure}
-The CORAL project consists of a hierarchical multilayer data processing system, the Software Data System (SDS), that processes data products at various levels in accordance with the specification for EOSDIS data products. \cite{EOSIS}
 
-\begin{table}[H]
-	\caption{Data Products \cite{coral-data-products}}
-	\begin{tabular}{| >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{2in} |}
-		\hline
-		Data Product & Description \\
-		\hline 
-		Level 0 & Reconstructed, unprocessed PRISM digitized numbers (DN) at full resolution with GPS \\
-		\hline 
-		Level 1 & Calibrated spectral radiance with geolocation information including illumination and observation geometry \\
-		\hline 
-		Level 2 & Benthic reflectance generated following atmosphere and water column radiative transfer inversion with geolocation, support processing information and flags \\
-		\hline 
-		Level 3 & Benthic cover, i.e., seafloor classified into coverage of benthic types (coral, algae, sand) with geolocation, uncertainties, and flags \\
-		\hline 
-		Level 4 & Benthic primary productivity and calcification \\
-		\hline 
-	\end{tabular}
-\end{table}
+Currently Radio astronomers manually classify galaxies based on visual inspection of the images which, we are afraid, is slow, introduces uncertainities and something we believe is not a worthy activity for a radio astronomer to be engaged in. 
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{coral_data_system.png}
-\caption{CORAL Data System \cite{coral-data-products}}
-\end{figure}
+Also, most algorithms have been used to classify just two object classes at a time. What we aim to achieve is build a robust model capable of handling more than 2 classes.
 
-More information regarding the CORAL project and the PRISM imaging spectrometer may be found on the project website. \footnote{http://coral.jpl.nasa.gov.}
 
-\subsection{Data Consolidation \& Archival Tracking}
-Sensitivity measurements are bound to evolving configuration formats, due to upgradation in hardware capabilities as the lifecycle of the project progresses. This creates a hindrance in the time to generate data driven scientific results, as a significant amount of time must be invested by the researcher to process these files of varying configuration formats. A next-generation system must be created that can efficiently process data across various configuration formats as needed, depending on the specific case. 
-The system should further be able to track the current state of the archive on the basis of defined characteristics, across all components of the pipeline. This consolidated system would result in a more streamlined data workflow, which would potentially reduce the time to generate data driven scientific results.
 
-\section{Objectives}
-The prime objective of the system is to create a next-generation science data workflow by streamlining the existing pipeline.
-We aim to improve efficiency of analysis, through the reduction in manual workload. We further aim to improve the automation of the analysis through a global configuration database.
-Specifically this would be done by creating a system, that will parse varying configuration formats as needed and consolidate key data features. Once these features have been extracted, they will be used in further data analysis. We anticipate multiple hurdles in this process due to the difficulty in creating a robust parser, insensitive to variations in different configuration formats. 
-The workflow would then further be automated to track the current state of the archive, characterized by features such as:
-\begin{enumerate}
-\itemsep0em 
-\item Which files have been analyzed
-\item Level to which every file been processed in the pipeline
-\item Where are the files stored in the system
-\item Metadata contained in each of the headers.
-\end{enumerate}
 
-Concretely the baseline level of efficiency for this system would be characterized through a higher degree of data insight coupled with a reduced system complexity, ease of integration with current SDS, and a minimum of 25\% improvement in the data product generation latency.
+\section{Objective}
 
-\section{Approach}
-Having worked as an Engineering Intern, at the National Center for Radio Astrophysics - Tata Institute of Fundamental Research (NCRA-TIFR) has made me better prepared for this SURF project. Here, I am currently part of a team developing an automated data analysis pipeline using SPAM \cite{spam-intema} for the calibration, flagging, and image synthesis of radio astronomical data generated by the Giant Meterwave Radio Telescope (GMRT). The images thus generated are integrated into NAPS (NCRA Proposal and Archival System), and then shared with the larger scientific community similar to the Sloan Digital Sky Survey (SDSS).
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{gadpu.png}
-\caption{GMRT Data Processing Utility}
-\end{figure}
+\begin{itemize}
+	\item Exploring rare galaxies by classifying them into a special category other than the ones mentioned in section yy.
+	\item Effectively reduce the efforts put in by radio astronomers without affecting accuracy.
+\end{itemize}
 
-The specifications of the current versions of the L1B products and L2B products may be found at \cite{L1B_data_product} and \cite{L2_data_product}. Prior to initiating work on the project, I would review these specifications in further depth, to gain domain level insight to the data flowing through the system.
 
-On project initiation, a multi-step procedure of satisfying the objectives of would occur in the following manner:
-\begin{enumerate}
-\itemsep0em
-\item A hands-on orientation to the SDS, where I would be interacting with the SDS team to understand in further depth the nature of the system.
-\item A requirements elicitation phase to ensure efficient and precise gathering of the features to be introduced.
-\item The design of the archival state tracking mechanism to cover all characteristics as mentioned.
-\item A prototype implementation of the parser + state tracking mechanism across a small section of the pipeline.
-\item The transfer of configuration data into a standard predefined data model. We are planning to store the data in a SQL family database (although we are exploring the possibility of using a NoSQL family data store, due to the non homogeneous nature of the data).
-\item An iterative approach to development to converge on target performance measures through the generation of statistics to log current system performance.
-\item Running an A/B test to ensure that the system integrates well into the current SDS, and to mitigate any possible challenges.
-\end{enumerate}
 
-Throughout the duration of the project, I would be interacting with the SDS team in the form of weekly meetings, periodic reports, and timely documentation.
 
-We expect the final system would result in a minimum of 25\% improvement in the data product generation latency and a more streamlined data workflow.
+\section{Approaches used for this problem}
+\newline As far as we know, no method has been employed for this task.
 
-In the final phase of the SURF project, I will collect the results, and structure the documentation maintained over the course of the project to generate a final project report.
 
-\section*{Acknowledgements}
-I thank Dr.David R. Thompson \footnote{NASA Jet Propulsion Laboratory, California Institute of Technology} for offering me the opportunity to contribute to the CORAL project, and taking the time to explain the intricacies of the system through the form of long discussions. I would further like to thank Dr.Yogesh Wadadekar \footnote{\label{NCRA-TIFR} National Center for Radio Astrophysics - Tata Institute of Fundamental Research}, Dr.C. H. Ishwara Chandra \footnotemark[\ref{NCRA-TIFR}], and Dr.Abhay Shukla \footnote{Pierre and Marie Curie University - Paris 6} for taking the time to review the research proposal, and providing invaluable advice on restructuring certain sections, increasing lucidity, and maintaining concision.
+ 
+\section{Our Proposed method}
+\subsection{Extracting sources from the FITS image using PyBDSM}
+  By Shubhankar
+\subsection{Cropping each individual source to work on it individually}
+ On the basis of RA(Right Ascension) and Dec (Declination) values generated from section 5.1, we then convert it to its corresponding pixel values in the original fits image. Based on these pixel values we crop a 10*10 patches of image with the source coordinates at the centre.
 
-\begin{thebibliography}{10}
-\bibitem{Reef_Studies}(International Society for Reef Studies Consensus Statement, October 2015)
+\subsection{Preprocessing of the data}
 
-\bibitem{bio_parameters} 
-\emph{Biogeophysical Components of Influence on Reefs},
-\texttt{https://coral.jpl.nasa.gov/about-coral}
+\begin{itemize}
+\item Image Processing techniques
+\end{itemize}
 
-\bibitem{EOSIS}
-\emph{Data Processing Levels for EOSDIS Data Products},
-\texttt{https://science.nasa.gov/earth-science\\/earth-science-data/data-processing-levels-\\for-eosdis-data-products}
+\subsection{Analytical Method}
 
-\bibitem{coral-data-products}
-\emph{Data Products Specification for CORAL},
-\texttt{https://coral.jpl.nasa.gov/data-products}
+Two broad steps that we plan to use: 
+\begin{itemize}
+	\item Statistical modelling of data to manually extract features. We plan to employ Scale-invariant feature transform (SIFT) algorithm to detect the features.  
+	\item Classification of the radio galaxies based on these extracted features. Possible approaches : Naive Bayes, SVM and Random Forests.
+\end{itemize}
 
-\bibitem{L1B_data_product}
-\emph{CORAL L1 Distribution Document v03},
-\texttt{https://coral.jpl.nasa.gov/alt\_locator\\/CORAL\_L1B\_Data\_Product\_Readme\_v04.txt}
 
-\bibitem{L2_data_product}
-\emph{CORAL L2 Distribution Document v02},
-Available at 
-\texttt{https://coral.jpl.nasa.gov/alt\_locator\\/CORAL\_L2\_Data\_Product\_Readme\_v02.txt}
+\subsection{Empirical Approach}
 
-\bibitem{spam-intema}
-\emph{SPAM: Source Peeling and Atmospheric Modeling}
-Intema, Huib
-\texttt{https://safe.nrao.edu/wiki/\\bin/view/Main/HuibIntemaSpam}
+We plan to deploy a Convolutional Neural Network model for classification which reduces the manual feature engineering part, and has achieved significant successes in object recognition and image classification tasks. ( Give References to papers) 
+    
 
-\end{thebibliography}
-\end{multicols*}
+
+\section{How we predict it will solve the problem}
+
+\section{Approximate timeline of completing the whole project}
+\begin{itemize}
+	\item 26th April to 11th May - literature survey
+	\item Mid-August to October - working on basic prototype model individually by trying out multiple approaches
+	\item October to November - choosing the approaches which work, and implementing them on all data, validation of the results.
+	\item November to December - Refining the system, cleaning and commenting the code
+\end{itemize} 
+
+
+
+
+
+\section{Data used}
+    TIFR GMRT Sky Survey data shall be used along with the data processed from GMRT cycle 20. We plan to use the data from other cycles once it has been run through our SPAM pipeline. 
+
+
 \end{document}
