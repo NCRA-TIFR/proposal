@@ -15,8 +15,6 @@
 \usepackage{pdflscape}
 \usepackage{graphicx}
 \usepackage{array}
-
-
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{charter}
@@ -100,9 +98,6 @@
 \end{tikzpicture}
 }
 
-
-
-
 \begin{document}
 \begin{titlepage}
 	\centering
@@ -176,34 +171,65 @@ More details can be found at:
 https://github.com/NCRA-TIFR/radiogen.
 
 \subsection{Data Preprocessing}
-\subsubsection{Input data}
-We'll generate cutouts (as mentioned in section 3.2) from every image 
-in the TGSS survey. We'll have approximately 5500 * 470 i.e. 2585000 patches of image. 
 
-There are three common forms of data preprocessing image data:
+Real world data are incomplete, inconsistent and noisy. Techniques like Data cleaning, integration, transformation, reduction, discretization are required to structure the data uniformly throughout the dataset in the required format.
 
+Some regular techniques are:
 \begin{itemize}
-\item Mean subtraction : It involves subtracting the mean, of the all the pixels, across every feature in the data.
+\item Mean subtraction 
 
-\item Normalization : It involves normalizing the data dimensions so that they are of approximately the same scale. It effectively changes the range of pixel intensity values
+It involves subtracting the mean across every individual feature in the data, and has the geometric interpretation of centering the cloud of data around the origin along every dimension.
+
+\item Normalization
+
+Normalization refers to normalizing the data dimensions so that they are of approximately the same scale. There are two common ways of achieving this normalization. One is to divide each dimension by its standard deviation, once it has been zero-centered. Another form of this preprocessing normalizes each dimension so that the min and max along the dimension is -1 and 1 respectively. 
+
 \end{itemize}
-
-\subsubsection{Dimensionality reduction}
-Dimensionality reduction is the process of reducing the number of random variables under consideration. It transforms the images in the high-dimensional space to a space of lesser dimensions.
-
-Some of the common forms of 
-
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.26]{prepro1.jpeg}
+\caption{Mean Subtraction and Normalization}
+\end{figure}
 \begin{itemize}
-	\item \textbf{Mean Subtraction}
+\item Dimensionality reduction using Principal Component Analysis
+
+The main linear technique for dimensionality reduction, principal component analysis, performs a linear mapping of the data to a lower-dimensional space in such a way that the variance of the data in the low-dimensional representation is maximized. By finding the eigen vector with the highest eigen value we select the Principal component axis with the highest variance and the minimum reconstruction error. Thus we reduce the dimensions by eliminating Principal component axes with the eigen vectors with the least variance thereby not losing much information.
 \end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{pca.png}
+\caption{Reduction from 2D to 1D using PCA}
+\end{figure}
 \subsection{Analytical Approach}
 
-Two broad steps that we plan to use: 
+Some approaches that we plan to use: 
 \begin{itemize}
-	\item Statistical modelling of data to manually extract features. We plan to employ Scale-invariant feature transform (SIFT) algorithm to detect the features.  
-	\item Classification of the radio galaxies based on these extracted features. Possible approaches : Naive Bayes, SVM and Random Forests.
-\end{itemize}
+\item Scale Invariant Feature Transform (SIFT
 
+Statistical modelling of data to manually extract features. For any object in an image, interesting points on the object can be extracted to provide a "feature description" of the object. This description, extracted from a training image, can then be used to identify the object when attempting to locate the object in a test image containing many other objects. To perform reliable recognition, it is important that the features extracted from the training image be detectable even under changes in image scale, noise and illumination. SIFT is invariant of scaling, transformation and rotation.
+
+\item Edge Detection
+
+1) Reduction of noise using a Gaussian filter
+2) Finding gradients along the X and Y directions in the image
+3) Suppression of local minima
+4) Double Thresholing to determine probable edges
+5) Suppression of all weak edges which lack connection
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{edge.jpeg}
+\caption{Edge detection}
+\end{figure}
+
+\item Image Segmentation
+
+Image Segmentation is the process of partitioning a digital image into multiple segments. The goal of segmentation is to simplify and change the representation of an image into something that is more meaningful and easier to analyze. It is typically used to locate objects and boundaries (lines, curves, etc.) in images. More precisely, image segmentation is the process of assigning a label to every pixel in an image such that pixels with the same label share certain characteristics.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.1]{segmentation.jpg}
+\caption{Segmentation of data into distinct characteristics}
+\end{figure}
 
 \subsection{Empirical Approach}
 
@@ -226,9 +252,6 @@ classication based on annotated images from the Galaxy Zoo project.
 
 \section{Timeline}
 
-
-
-
 \begin{vtimeline}[timeline color=cyan!80!blue, line offset=2pt]
 26th April to 11th May & literature survey\endlr
 Mid-August to October & Basic prototype model \endlr
@@ -236,12 +259,8 @@ October to November & choosing the approaches which work, and implementing them 
 November to December & Refining the system, cleaning and commenting the code\endlr
 \end{vtimeline}
 
-
 \section{Conclusion}
 We would like to thank Dr.Yogesh Wadadekar \footnote{\label{NCRA-TIFR} National Center for Radio Astrophysics - Tata Institute of Fundamental Research}, Dr.C. H. Ishwara Chandra \footnotemark[\ref{NCRA-TIFR}] for their supportive presence during the process of brainstorming potential research ideas. Their constant guidance has been an invaluable source of inspiration for us, and we are eager to continue working with them.
-
-
-
 
 \begin{thebibliography}{9}
 \bibitem{alex} 
@@ -263,11 +282,6 @@ Andrej Karparthy, Fei-Fei Li, Justin Johnson, Serena Yeung.
 Sander Dieleman, Kyle W. Willett and Joni Dambre  
 \textit{Rotation-invariant convolutional neural networks for galaxy morphology prediction}.  
 \newline arXiv print : 1503.0707v1, 2015.
-
-
 \end{thebibliography}
-
-
-
 \end{multicols*}
 \end{document}
